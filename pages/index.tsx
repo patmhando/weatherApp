@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NextPage } from 'next';
 import { Inter } from 'next/font/google';
 
@@ -7,6 +8,16 @@ import TempResults from '@/components/TempResults';
 const inter = Inter({ subsets: ['latin'] });
 
 const Home: NextPage = () => {
+  const [search, setSearch] = useState('');
+
+  const handleSearch = (e: any) => {
+    setSearch(e.target.value);
+  };
+
+  const handleResults = () => {
+    setSearch('');
+  };
+
   return (
     <main
       className={`${inter.className} my-8 flex flex-col justify-center items-center gap-4`}
@@ -18,10 +29,17 @@ const Home: NextPage = () => {
             type="text"
             placeholder="Enter City"
             name="search"
+            value={search}
+            onChange={handleSearch}
             className="outline-none"
           />
         </label>
-        <button className="border px-4 py-1 rounded">Search</button>
+        <button
+          onClick={handleResults}
+          className="border px-4 py-1 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500"
+        >
+          Search
+        </button>
       </div>
       <h3 className="text-xl">Weather Results</h3>
       <table className="">
