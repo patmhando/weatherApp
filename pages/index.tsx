@@ -12,8 +12,6 @@ const Home: NextPage = () => {
   const [forecast, setForecast] = useState<any>();
   const [current, setCurrent] = useState<any>();
 
-  const cnt = 4;
-
   const handleCity = (e: any) => {
     setCity(e.target.value);
   };
@@ -27,12 +25,11 @@ const Home: NextPage = () => {
       const res = await fetch(
         `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
       );
-      const dataSingle = await response.json();
-      const data = await res.json();
+      const dataCurrent = await response.json();
+      const dataForecast = await res.json();
 
-      console.log(dataSingle);
-      setCurrent(dataSingle);
-      setForecast(data);
+      setCurrent(dataCurrent);
+      setForecast(dataForecast);
     } catch (err) {
       console.log(err, 'something went really wrong!');
     }
