@@ -1,7 +1,7 @@
 import { FC } from 'react';
 const TempResults: FC = () => {
   return (
-    <tr className="text-sm">
+    <tr className="text-sm odd:bg-gray-300 even:bg-gray-400">
       <td>Day</td>
       <td>Temperature</td>
       <td>Weather Description</td>
