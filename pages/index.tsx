@@ -59,6 +59,7 @@ const Home: NextPage = () => {
           Search
         </button>
       </div>
+      <h3 className="text-2xl font-bold capitalize">{city} current weather</h3>
       <div className="flex gap-2">
         <div>
           <p>Temperature</p>
@@ -81,7 +82,7 @@ const Home: NextPage = () => {
           <p>{current?.data[0]?.weather?.icon}</p>
         </div>
       </div>
-      <h3 className="text-xl">Daily Forecast</h3>
+      <h3 className="text-2xl font-bold capitalize">Daily Forecast</h3>
       {forecast && (
         <table className="" cellPadding={18}>
           <thead className="text-sm">
