@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 const Home: NextPage = () => {
   const [city, setCity] = useState('');
-  const [weatherData, setWeatherData] = useState();
+  const [weatherData, setWeatherData] = useState<any>();
 
   const cnt = 4;
 
@@ -20,16 +20,16 @@ const Home: NextPage = () => {
   const handleResults = async () => {
     try {
       const res = await fetch(
-        `api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=${cnt}&appid=${process.env.API_KEY}`
+        `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
       );
 
       const data = await res.json();
       setWeatherData(data);
-      console.log(data);
     } catch (err) {
       console.log(err, 'something went really wrong!');
     }
   };
+
   return (
     <main
       className={`${inter.className} my-8 flex flex-col justify-center items-center gap-4`}
@@ -54,22 +54,43 @@ const Home: NextPage = () => {
           Search
         </button>
       </div>
-      <h3 className="text-xl">Weather Results</h3>
+      <div className="flex">
+        <div>
+          <p>Temperature</p>
+          <p>Temp</p>
+        </div>
+        <div>
+          <p>Weather Description</p>
+          <p>Description</p>
+        </div>
+        <div>
+          <p>Humidity</p>
+          <p>Humi</p>
+        </div>
+        <div>
+          <p>Wind Speed</p>
+          <p>Speed</p>
+        </div>
+        <div>
+          <p>Icon</p>
+          <p>ico</p>
+        </div>
+      </div>
+      <h3 className="text-xl">Daily Forecast</h3>
       <table className="" cellPadding={18}>
         <thead className="text-sm">
           <tr className="bg-yellow-900">
-            <th>Day</th>
-            <th>Temperature</th>
-            <th>Weather Description</th>
-            <th>Wind Speed</th>
+            <th>Date</th>
             <th>Icon</th>
+            <th>Low Temp</th>
+            <th>High Temp</th>
           </tr>
         </thead>
         <tbody>
-          {/* {weatherData?.map(weather=>)} */}
-          <TempResults />
-          <TempResults />
-          <TempResults />
+          {weatherData?.data?.map(
+            (weather: any, i: number) =>
+              i < 5 && <TempResults weather={weather} />
+          )}
         </tbody>
       </table>
     </main>
