@@ -9,7 +9,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 const Home: NextPage = () => {
   const [city, setCity] = useState('');
-  const [weatherData, setWeatherData] = useState<any>();
+  const [forecast, setForecast] = useState<any>();
+  const [current, setCurrent] = useState<any>();
 
   const cnt = 4;
 
@@ -19,12 +20,19 @@ const Home: NextPage = () => {
 
   const handleResults = async () => {
     try {
+      const response = await fetch(
+        `https://api.weatherbit.io/v2.0/current?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
+      );
+
       const res = await fetch(
         `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
       );
-
+      const dataSingle = await response.json();
       const data = await res.json();
-      setWeatherData(data);
+
+      console.log(dataSingle);
+      setCurrent(dataSingle);
+      setForecast(data);
     } catch (err) {
       console.log(err, 'something went really wrong!');
     }
@@ -54,45 +62,50 @@ const Home: NextPage = () => {
           Search
         </button>
       </div>
-      <div className="flex">
+      <div className="flex gap-2">
         <div>
           <p>Temperature</p>
-          <p>Temp</p>
+          <p>{current?.data[0]?.temp}</p>
         </div>
         <div>
           <p>Weather Description</p>
-          <p>Description</p>
+          <p>{current?.data[0]?.weather?.description}</p>
         </div>
         <div>
           <p>Humidity</p>
-          <p>Humi</p>
+          <p>{current?.data[0]?.rh}</p>
         </div>
         <div>
           <p>Wind Speed</p>
-          <p>Speed</p>
+          <p>{current?.data[0]?.wind_spd}</p>
         </div>
         <div>
           <p>Icon</p>
-          <p>ico</p>
+          <p>{current?.data[0]?.weather?.icon}</p>
         </div>
       </div>
       <h3 className="text-xl">Daily Forecast</h3>
-      <table className="" cellPadding={18}>
-        <thead className="text-sm">
-          <tr className="bg-yellow-900">
-            <th>Date</th>
-            <th>Icon</th>
-            <th>Low Temp</th>
-            <th>High Temp</th>
-          </tr>
-        </thead>
-        <tbody>
-          {weatherData?.data?.map(
-            (weather: any, i: number) =>
-              i < 5 && <TempResults weather={weather} />
-          )}
-        </tbody>
-      </table>
+      {forecast && (
+        <table className="" cellPadding={18}>
+          <thead className="text-sm">
+            <tr className="bg-yellow-900">
+              <th>Date</th>
+              <th>Icon</th>
+              <th>Low Temp</th>
+              <th>High Temp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {forecast?.data?.map(
+              (weather: any, i: number) =>
+                i > 0 &&
+                i < 6 && (
+                  <TempResults key={weather?.datetime} weather={weather} />
+                )
+            )}
+          </tbody>
+        </table>
+      )}
     </main>
   );
 };
