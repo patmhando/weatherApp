@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NextPage } from 'next';
 import { Inter } from 'next/font/google';
+import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
 // components
 import TempResults from '@/components/TempResults';
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
   const [forecast, setForecast] = useState<any>();
   const [current, setCurrent] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const [mode, setMode] = useState(false);
 
   const [temp, setTemp] = useState('C');
 
@@ -34,10 +36,15 @@ const Home: NextPage = () => {
 
       setCurrent(dataCurrent);
       setForecast(dataForecast);
+
       setLoading(false);
     } catch (err) {
       console.log(err, 'something went really wrong!');
     }
+  };
+
+  const handleMode = () => {
+    setMode(!mode);
   };
 
   const handleTemp = (e: any) => {
@@ -48,6 +55,13 @@ const Home: NextPage = () => {
     <main
       className={`${inter.className} my-8 flex flex-col justify-center items-center gap-4`}
     >
+      <button onClick={handleMode} className="focus:outline-none">
+        {mode === false ? (
+          <SunIcon className="w-6 h-6" aria-hidden="true" />
+        ) : (
+          <MoonIcon className="w-6 h-6" aria-hidden="true" />
+        )}
+      </button>
       <h1 className="text-center text-2xl uppercase">Weather Forecast App</h1>
       <div className="flex gap-1 mx-8">
         <label htmlFor="city" className="py-1 border px-2">
@@ -73,9 +87,7 @@ const Home: NextPage = () => {
       <div className="flex gap-2">
         <div>
           <p>Temperature</p>
-          <p>
-            {current?.data[0].temp} <span>{temp}</span>
-          </p>
+          <p>{current?.data[0].temp}</p>
           <select name="temp" id="" onChange={handleTemp}>
             <option value="C">C</option>
             <option value="F">F</option>
