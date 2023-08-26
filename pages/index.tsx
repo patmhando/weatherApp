@@ -89,14 +89,17 @@ const Home: NextPage = () => {
         <h3 className="text-2xl font-bold capitalize">
           {city} current weather
         </h3>
+        <div className="flex gap-1">
+          <p>Temeperature in:</p>
+          <select name="temp" onChange={handleTemp}>
+            <option value="C">C</option>
+            <option value="F">F</option>
+          </select>
+        </div>
         <div className="flex gap-2">
           <div>
             <p>Temperature</p>
             <p>{current?.data[0].temp}</p>
-            <select name="temp" id="" onChange={handleTemp}>
-              <option value="C">C</option>
-              <option value="F">F</option>
-            </select>
           </div>
           <div>
             <p>Weather Description</p>
