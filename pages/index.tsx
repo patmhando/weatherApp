@@ -7,20 +7,11 @@ import TempResults from '@/components/TempResults';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const tempConvert = (temp: string, tempCalc: number) => {
-  // Celcius to Faregnheight
-  if (temp === 'C') {
-    return (tempCalc * 9) / 5 + 32;
-  } else if (temp === 'F') {
-    // Fareghnheight to Celcius
-    return ((tempCalc - 32) * 5) / 9;
-  }
-};
-
 const Home: NextPage = () => {
   const [city, setCity] = useState('');
   const [forecast, setForecast] = useState<any>();
   const [current, setCurrent] = useState<any>();
+  const [loading, setLoading] = useState(false);
 
   const [temp, setTemp] = useState('C');
 
@@ -29,6 +20,7 @@ const Home: NextPage = () => {
   };
 
   const handleResults = async () => {
+    setLoading(true);
     try {
       const response = await fetch(
         `https://api.weatherbit.io/v2.0/current?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
@@ -42,6 +34,7 @@ const Home: NextPage = () => {
 
       setCurrent(dataCurrent);
       setForecast(dataForecast);
+      setLoading(false);
     } catch (err) {
       console.log(err, 'something went really wrong!');
     }
@@ -70,7 +63,8 @@ const Home: NextPage = () => {
         <button
           type="submit"
           onClick={handleResults}
-          className="border px-4 py-1 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500"
+          disabled={loading}
+          className=" flex gap-1 border px-4 py-1 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 "
         >
           Search
         </button>
@@ -80,7 +74,7 @@ const Home: NextPage = () => {
         <div>
           <p>Temperature</p>
           <p>
-            {tempConvert('C', current?.data[0].temp)} <span>{temp}</span>
+            {current?.data[0].temp} <span>{temp}</span>
           </p>
           <select name="temp" id="" onChange={handleTemp}>
             <option value="C">C</option>
