@@ -7,10 +7,22 @@ import TempResults from '@/components/TempResults';
 
 const inter = Inter({ subsets: ['latin'] });
 
+export const tempConvert = (temp: string, tempCalc: number) => {
+  // Celcius to Faregnheight
+  if (temp === 'C') {
+    return (tempCalc * 9) / 5 + 32;
+  } else if (temp === 'F') {
+    // Fareghnheight to Celcius
+    return ((tempCalc - 32) * 5) / 9;
+  }
+};
+
 const Home: NextPage = () => {
   const [city, setCity] = useState('');
   const [forecast, setForecast] = useState<any>();
   const [current, setCurrent] = useState<any>();
+
+  const [temp, setTemp] = useState('C');
 
   const handleCity = (e: any) => {
     setCity(e.target.value);
@@ -33,6 +45,10 @@ const Home: NextPage = () => {
     } catch (err) {
       console.log(err, 'something went really wrong!');
     }
+  };
+
+  const handleTemp = (e: any) => {
+    setTemp(e?.target.value);
   };
 
   return (
@@ -63,7 +79,13 @@ const Home: NextPage = () => {
       <div className="flex gap-2">
         <div>
           <p>Temperature</p>
-          <p>{current?.data[0]?.temp}</p>
+          <p>
+            {tempConvert('C', current?.data[0].temp)} <span>{temp}</span>
+          </p>
+          <select name="temp" id="" onChange={handleTemp}>
+            <option value="C">C</option>
+            <option value="F">F</option>
+          </select>
         </div>
         <div>
           <p>Weather Description</p>
