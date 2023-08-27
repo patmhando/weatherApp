@@ -5,7 +5,7 @@ interface IProps {
 }
 const TempResults: FC<IProps> = ({ weather }) => {
   return (
-    <tr className="text-sm odd:bg-gray-300 even:bg-gray-400">
+    <tr className="text-sm odd:bg-gray-400 even:bg-gray-500">
       <td>{weather?.datetime}</td>
       <td>{weather?.weather?.icon}</td>
       <td>{weather?.low_temp}</td>
