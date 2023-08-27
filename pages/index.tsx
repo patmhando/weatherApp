@@ -160,7 +160,7 @@ const Home: NextPage = () => {
         <div className="bg-red-700 rounded py-1 px-4 text-white">{errors}</div>
       )}
       <p>
-        SOurce code are available here{' '}
+        Source code are available here
         <a
           href="https://github.com/patmhando/weatherApp"
           className="text-blue-600"
