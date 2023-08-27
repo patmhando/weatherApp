@@ -17,10 +17,9 @@ const Home: NextPage = () => {
   const [current, setCurrent] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState('light');
-
   const [errors, setErrors] = useState('');
-
   const [temp, setTemp] = useState('C');
+  const [currentCity, setCurrentCity] = useState('');
 
   const handleCity = (e: any) => {
     setCity(e.target.value);
@@ -31,6 +30,7 @@ const Home: NextPage = () => {
 
     setCurrent(null);
     setForecast(null);
+    setCurrentCity('');
     try {
       const response = await fetch(
         `https://api.weatherbit.io/v2.0/current?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
@@ -44,6 +44,7 @@ const Home: NextPage = () => {
 
       setCurrent(dataCurrent);
       setForecast(dataForecast);
+      setCurrentCity(city);
 
       setLoading(false);
     } catch (err: any) {
@@ -95,8 +96,9 @@ const Home: NextPage = () => {
             Search
           </button>
         </div>
+
         <h3 className="text-2xl font-bold capitalize">
-          {city} current weather
+          {currentCity} current weather
         </h3>
         <div className="flex gap-1">
           <p>Temeperature in:</p>
@@ -105,7 +107,7 @@ const Home: NextPage = () => {
             <option value="F">F</option>
           </select>
         </div>
-        <div className="flex gap-2 text-center flex-wrap mx-auto">
+        <div className="flex gap-2 text-center flex-wrap justify-center">
           <Card>
             <p className="">Temperature</p>
             <p>{current?.data[0].temp}</p>
