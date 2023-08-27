@@ -94,7 +94,7 @@ const Home: NextPage = () => {
           disabled={loading}
           className=" flex gap-1 border px-4 py-1 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 "
         >
-          Search
+          {loading ? 'Loading...' : 'Search'}
         </button>
       </div>
 
@@ -163,7 +163,7 @@ const Home: NextPage = () => {
         Source code are available here
         <a
           href="https://github.com/patmhando/weatherApp"
-          className="text-blue-600"
+          className="text-blue-600 ml-1"
         >
           Link
         </a>
