@@ -1,6 +1,7 @@
-import { useState, useContext, createContext } from 'react';
+import { useState } from 'react';
 import { NextPage } from 'next';
 import { Inter } from 'next/font/google';
+import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
 // components
@@ -9,17 +10,20 @@ import Card from '@/components/Card';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const ThemeContext = createContext('light');
-
 const Home: NextPage = () => {
   const [city, setCity] = useState('');
   const [forecast, setForecast] = useState<any>();
   const [current, setCurrent] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState('light');
   const [errors, setErrors] = useState('');
   const [temp, setTemp] = useState('C');
   const [currentCity, setCurrentCity] = useState('');
+
+  const { theme, setTheme } = useTheme();
+
+  const handleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   const handleCity = (e: any) => {
     setCity(e.target.value);
@@ -55,109 +59,116 @@ const Home: NextPage = () => {
     }
   };
 
-  const handleMode = () => {
-    setMode(mode === 'light' ? 'dark' : 'light');
-  };
-
   const handleTemp = (e: any) => {
     setTemp(e?.target.value);
   };
 
   return (
-    <ThemeContext.Provider value={mode}>
-      <main
-        className={`${inter.className} my-8 flex flex-col justify-center items-center gap-4`}
-      >
-        <button onClick={handleMode} className="focus:outline-none">
-          {mode === 'light' ? (
-            <SunIcon className="w-6 h-6" aria-hidden="true" />
-          ) : (
-            <MoonIcon className="w-6 h-6" aria-hidden="true" />
-          )}
+    <main
+      className={`${inter.className} my-8  flex flex-col justify-center items-center gap-2`}
+    >
+      <button onClick={handleTheme} className="focus:outline-none">
+        {theme === 'light' ? (
+          <SunIcon className="w-6 h-6" aria-hidden="true" />
+        ) : (
+          <MoonIcon className="w-6 h-6" aria-hidden="true" />
+        )}
+      </button>
+      <h1 className="text-center text-2xl font-bold uppercase">
+        Weather Forecast App
+      </h1>
+      <div className="flex gap-1 mx-8">
+        <label htmlFor="city" className="py-1 border px-2">
+          <input
+            type="text"
+            placeholder="Enter City"
+            name="city"
+            value={city}
+            onChange={handleCity}
+            className="outline-none"
+          />
+        </label>
+        <button
+          type="submit"
+          onClick={handleResults}
+          disabled={loading}
+          className=" flex gap-1 border px-4 py-1 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 "
+        >
+          Search
         </button>
-        <h1 className="text-center text-2xl uppercase">Weather Forecast App</h1>
-        <div className="flex gap-1 mx-8">
-          <label htmlFor="city" className="py-1 border px-2">
-            <input
-              type="text"
-              placeholder="Enter City"
-              name="city"
-              value={city}
-              onChange={handleCity}
-              className="outline-none"
-            />
-          </label>
-          <button
-            type="submit"
-            onClick={handleResults}
-            disabled={loading}
-            className=" flex gap-1 border px-4 py-1 rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 "
-          >
-            Search
-          </button>
-        </div>
+      </div>
 
-        <h3 className="text-2xl font-bold capitalize">
-          {currentCity} current weather
-        </h3>
-        <div className="flex gap-1">
-          <p>Temeperature in:</p>
-          <select name="temp" onChange={handleTemp}>
+      <h3 className="text-2xl font-semibold capitalize">
+        {currentCity} current weather
+      </h3>
+      <div className="flex gap-1">
+        <p className="text-lg font-semibold">Temeperature in C</p>
+        {/* <select name="temp" onChange={handleTemp}>
             <option value="C">C</option>
             <option value="F">F</option>
-          </select>
-        </div>
-        <div className="flex gap-2 text-center flex-wrap justify-center">
-          <Card>
-            <p className="">Temperature</p>
-            <p>{current?.data[0].temp}</p>
-          </Card>
-          <Card>
-            <p>Weather Description</p>
-            <p>{current?.data[0]?.weather?.description}</p>
-          </Card>
-          <Card>
-            <p>Humidity</p>
-            <p>{current?.data[0]?.rh}</p>
-          </Card>
-          <Card>
-            <p>Wind Speed</p>
-            <p>{current?.data[0]?.wind_spd}</p>
-          </Card>
-          <Card>
-            <p>Icon</p>
-            <p>{current?.data[0]?.weather?.icon}</p>
-          </Card>
-        </div>
-        <h3 className="text-2xl font-bold capitalize">Daily Forecast</h3>
-        {forecast && (
-          <table className="" cellPadding={20}>
-            <thead className="text-sm">
-              <tr className="bg-yellow-900">
-                <th>Date</th>
-                <th>Icon</th>
-                <th>Low Temp</th>
-                <th>High Temp</th>
-              </tr>
-            </thead>
-            <tbody>
-              {forecast?.data?.map(
-                (weather: any, i: number) =>
-                  i > 0 &&
-                  i < 6 && (
-                    <TempResults key={weather?.datetime} weather={weather} />
-                  )
-              )}
-            </tbody>
-          </table>
-        )}
-        {errors && (
-          <div className="bg-red-700 rounded py-1 px-4 text-white">
-            {errors}
-          </div>
-        )}
-      </main>
-    </ThemeContext.Provider>
+          </select> */}
+      </div>
+      <div className="flex gap-2 text-center flex-wrap justify-center mb-2">
+        <Card>
+          <p className="">Temperature</p>
+          <p>{current?.data[0].temp}</p>
+        </Card>
+        <Card>
+          <p>Weather Description</p>
+          <p>{current?.data[0]?.weather?.description}</p>
+        </Card>
+        <Card>
+          <p>Humidity</p>
+          <p>{current?.data[0]?.rh}</p>
+        </Card>
+        <Card>
+          <p>Wind Speed</p>
+          <p>{current?.data[0]?.wind_spd}</p>
+        </Card>
+        <Card>
+          <p>Icon</p>
+          <p>{current?.data[0]?.weather?.icon}</p>
+        </Card>
+      </div>
+      <h3 className="text-2xl font-semibold capitalize">Daily Forecast</h3>
+      {forecast && (
+        <table className="" cellPadding={20}>
+          <thead className="text-sm">
+            <tr className="bg-yellow-900">
+              <th>Date</th>
+              <th>Icon</th>
+              <th>Low Temp</th>
+              <th>High Temp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {forecast?.data?.map(
+              (weather: any, i: number) =>
+                i > 0 &&
+                i < 6 && (
+                  <TempResults key={weather?.datetime} weather={weather} />
+                )
+            )}
+          </tbody>
+        </table>
+      )}
+      <p className="bg-red-700 rounded py-1 px-4 text-base sm:text-lg text-white">
+        <span className="">Note: </span>
+        <span>The App only works for Tanzania regions</span>
+      </p>
+      {errors && (
+        <div className="bg-red-700 rounded py-1 px-4 text-white">{errors}</div>
+      )}
+      <p>
+        SOurce code are available here{' '}
+        <a
+          href="https://github.com/patmhando/weatherApp"
+          className="text-blue-600"
+        >
+          Link
+        </a>
+      </p>
+    </main>
   );
 };
 export default Home;
