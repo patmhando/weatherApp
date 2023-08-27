@@ -5,6 +5,7 @@ import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
 // components
 import TempResults from '@/components/TempResults';
+import Card from '@/components/Card';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,6 +18,8 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState('light');
 
+  const [errors, setErrors] = useState('');
+
   const [temp, setTemp] = useState('C');
 
   const handleCity = (e: any) => {
@@ -25,6 +28,9 @@ const Home: NextPage = () => {
 
   const handleResults = async () => {
     setLoading(true);
+
+    setCurrent(null);
+    setForecast(null);
     try {
       const response = await fetch(
         `https://api.weatherbit.io/v2.0/current?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
@@ -40,8 +46,11 @@ const Home: NextPage = () => {
       setForecast(dataForecast);
 
       setLoading(false);
-    } catch (err) {
-      console.log(err, 'something went really wrong!');
+    } catch (err: any) {
+      setErrors('');
+
+      console.log(err);
+      setErrors(err.message);
     }
   };
 
@@ -96,31 +105,31 @@ const Home: NextPage = () => {
             <option value="F">F</option>
           </select>
         </div>
-        <div className="flex gap-2">
-          <div>
-            <p>Temperature</p>
+        <div className="flex gap-2 text-center flex-wrap mx-auto">
+          <Card>
+            <p className="">Temperature</p>
             <p>{current?.data[0].temp}</p>
-          </div>
-          <div>
+          </Card>
+          <Card>
             <p>Weather Description</p>
             <p>{current?.data[0]?.weather?.description}</p>
-          </div>
-          <div>
+          </Card>
+          <Card>
             <p>Humidity</p>
             <p>{current?.data[0]?.rh}</p>
-          </div>
-          <div>
+          </Card>
+          <Card>
             <p>Wind Speed</p>
             <p>{current?.data[0]?.wind_spd}</p>
-          </div>
-          <div>
+          </Card>
+          <Card>
             <p>Icon</p>
             <p>{current?.data[0]?.weather?.icon}</p>
-          </div>
+          </Card>
         </div>
         <h3 className="text-2xl font-bold capitalize">Daily Forecast</h3>
         {forecast && (
-          <table className="" cellPadding={18}>
+          <table className="" cellPadding={20}>
             <thead className="text-sm">
               <tr className="bg-yellow-900">
                 <th>Date</th>
@@ -139,6 +148,11 @@ const Home: NextPage = () => {
               )}
             </tbody>
           </table>
+        )}
+        {errors && (
+          <div className="bg-red-700 rounded py-1 px-4 text-white">
+            {errors}
+          </div>
         )}
       </main>
     </ThemeContext.Provider>
