@@ -4,6 +4,9 @@ import { Inter } from 'next/font/google';
 import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
+// config
+import { API_KEY } from '@/config';
+
 // components
 import TempResults from '@/components/TempResults';
 import Card from '@/components/Card';
@@ -48,17 +51,13 @@ const Home: NextPage = () => {
     setCurrentCity('');
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=9c43c15bee572cafdd4c2ea51f7e5f6b`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
       );
 
-      // const res = await fetch(
-      //   `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
-      // );
       const dataCurrent: TempCurrent = await response.json();
-      // const dataForecast = await res.json();
 
       setCurrent(dataCurrent);
-      // setForecast(dataForecast);
+
       setCurrentCity(city);
 
       setLoading(false);
