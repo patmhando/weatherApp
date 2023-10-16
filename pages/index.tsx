@@ -10,10 +10,22 @@ import Card from '@/components/Card';
 
 const inter = Inter({ subsets: ['latin'] });
 
+interface TempCurrent {
+  weather: [{ description: string; icon: string }];
+  main: {
+    temp: number;
+    pressure: number;
+    humidity: number;
+  };
+  wind: {
+    speed: number;
+  };
+}
+
 const Home: NextPage = () => {
   const [city, setCity] = useState('');
   const [forecast, setForecast] = useState<any>();
-  const [current, setCurrent] = useState<any>();
+  const [current, setCurrent] = useState<TempCurrent>();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState('');
   const [temp, setTemp] = useState('C');
@@ -32,29 +44,27 @@ const Home: NextPage = () => {
   const handleResults = async () => {
     setLoading(true);
 
-    setCurrent(null);
     setForecast(null);
     setCurrentCity('');
     try {
       const response = await fetch(
-        `https://api.weatherbit.io/v2.0/current?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=9c43c15bee572cafdd4c2ea51f7e5f6b`
       );
 
-      const res = await fetch(
-        `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
-      );
-      const dataCurrent = await response.json();
-      const dataForecast = await res.json();
+      // const res = await fetch(
+      //   `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=tz&key=67cc315733ce483e87b5240fb53abb4b`
+      // );
+      const dataCurrent: TempCurrent = await response.json();
+      // const dataForecast = await res.json();
 
       setCurrent(dataCurrent);
-      setForecast(dataForecast);
+      // setForecast(dataForecast);
       setCurrentCity(city);
 
       setLoading(false);
     } catch (err: any) {
       setErrors('');
 
-      console.log(err);
       setErrors(err.message);
     }
   };
@@ -111,23 +121,23 @@ const Home: NextPage = () => {
       <div className="flex gap-2 text-center flex-wrap justify-center mb-2">
         <Card>
           <p className="">Temperature</p>
-          <p>{current?.data[0].temp}</p>
+          <p>{current?.main?.temp}</p>
         </Card>
         <Card>
           <p>Weather Description</p>
-          <p>{current?.data[0]?.weather?.description}</p>
+          <p>{current?.weather?.[0]?.description}</p>
         </Card>
         <Card>
           <p>Humidity</p>
-          <p>{current?.data[0]?.rh}</p>
+          <p>{current?.main?.humidity}</p>
         </Card>
         <Card>
           <p>Wind Speed</p>
-          <p>{current?.data[0]?.wind_spd}</p>
+          <p>{current?.wind?.speed}</p>
         </Card>
         <Card>
           <p>Icon</p>
-          <p>{current?.data[0]?.weather?.icon}</p>
+          <p>{current?.weather?.[0]?.icon}</p>
         </Card>
       </div>
       <h3 className="text-2xl font-semibold capitalize">Daily Forecast</h3>
@@ -142,30 +152,23 @@ const Home: NextPage = () => {
             </tr>
           </thead>
           <tbody>
-            {forecast?.data?.map(
-              (weather: any, i: number) =>
-                i > 0 &&
-                i < 6 && (
-                  <TempResults key={weather?.datetime} weather={weather} />
-                )
-            )}
+            {forecast?.data?.map((weather: any) => (
+              <TempResults key={weather?.datetime} weather={weather} />
+            ))}
           </tbody>
         </table>
       )}
-      <p className="bg-red-700 rounded py-1 px-4 text-base sm:text-lg text-white">
-        <span className="">Note: </span>
-        <span>The App only works for Tanzania regions</span>
-      </p>
+
       {errors && (
         <div className="bg-red-700 rounded py-1 px-4 text-white">{errors}</div>
       )}
       <p>
-        Source code are available here
+        Source code are available
         <a
           href="https://github.com/patmhando/weatherApp"
           className="text-blue-600 ml-1"
         >
-          Link
+          here
         </a>
       </p>
     </main>
