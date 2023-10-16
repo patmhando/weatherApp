@@ -4,9 +4,6 @@ import { Inter } from 'next/font/google';
 import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
-// config
-import { API_KEY } from '@/config';
-
 // components
 import TempResults from '@/components/TempResults';
 import Card from '@/components/Card';
@@ -51,7 +48,7 @@ const Home: NextPage = () => {
     setCurrentCity('');
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.NEXT_PUBLIC_API_KEY}`
       );
 
       const dataCurrent: TempCurrent = await response.json();
