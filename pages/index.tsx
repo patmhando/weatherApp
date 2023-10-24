@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NextPage } from 'next';
-import { Inter } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
@@ -8,7 +8,7 @@ import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import TempResults from '@/components/TempResults';
 import Card from '@/components/Card';
 
-const inter = Inter({ subsets: ['latin'] });
+const montserrat = Montserrat({ subsets: ['latin'] });
 
 interface TempCurrent {
   weather: [{ description: string; icon: string }];
@@ -71,10 +71,10 @@ const Home: NextPage = () => {
 
   return (
     <main
-      className={`${inter.className} my-8  flex flex-col justify-center items-center gap-2`}
+      className={`${montserrat.className} my-8  flex flex-col justify-center items-center gap-2`}
     >
       <button onClick={handleTheme} className="focus:outline-none">
-        {theme === 'light' ? (
+        {theme === 'dark' ? (
           <SunIcon className="w-6 h-6" aria-hidden="true" />
         ) : (
           <MoonIcon className="w-6 h-6" aria-hidden="true" />
