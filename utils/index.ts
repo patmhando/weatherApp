@@ -1,9 +1,6 @@
-export const tempConvert = (tempCalc: any, temp: string) => {
-  // Celcius to Faregnheight
-  if (temp === 'F') {
-    return tempCalc;
-  } else if (temp === 'C') {
-    // Fareghnheight to Celcius
+export const tempConvert = (tempCalc: number, temp: string): number => {
+  if (temp === 'C') {
     return ((tempCalc - 32) * 5) / 9;
   }
+  return tempCalc;
 };
