@@ -8,7 +8,14 @@ const config: Config = {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primaryColor: '#d8671b',
+        secondaryColor: '#1a1a2a',
+        whiteColor: '#f5f5f5',
+        grayColor: '#9999a0',
+      },
+    },
   },
   plugins: [],
 };

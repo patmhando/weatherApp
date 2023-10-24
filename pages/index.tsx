@@ -9,6 +9,9 @@ import TempResults from '@/components/TempResults';
 import Card from '@/components/Card';
 import Image from 'next/image';
 
+// utils
+import { tempConvert } from '@/utils';
+
 const montserrat = Montserrat({ subsets: ['latin'] });
 
 interface TempCurrent {
@@ -69,7 +72,7 @@ const Home: NextPage = () => {
   const handleTemp = (e: any) => {
     setTemp(e?.target.value);
   };
-
+  console.log(temp);
   return (
     <main
       className={`${montserrat.className} my-8  flex flex-col justify-center items-center gap-2`}
@@ -106,15 +109,17 @@ const Home: NextPage = () => {
       </div>
 
       <div className="flex gap-1">
-        {/* <select name="temp" onChange={handleTemp}>
-            <option value="C">C</option>
-            <option value="F">F</option>
-          </select> */}
+        <select name="temp" onChange={handleTemp}>
+          <option value="C">C</option>
+          <option value="F">F</option>
+        </select>
       </div>
       <div className="flex gap-2 text-center flex-wrap justify-center mb-2">
         <Card>
           <h3 className="text-2xl font-semibold capitalize">{currentCity}</h3>
-          <p>{current?.main?.temp}&deg;C</p>
+          <p>
+            {tempConvert(212, temp)}&deg;{temp}
+          </p>
 
           <p className="capitalize">{current?.weather?.[0]?.description}</p>
 
