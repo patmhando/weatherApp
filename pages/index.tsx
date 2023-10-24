@@ -33,7 +33,6 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState('');
   const [temp, setTemp] = useState('C');
-  const [currentCity, setCurrentCity] = useState('');
 
   const { theme, setTheme } = useTheme();
 
@@ -49,7 +48,6 @@ const Home: NextPage = () => {
     setLoading(true);
 
     setForecast(null);
-    setCurrentCity('');
     try {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.NEXT_PUBLIC_API_KEY}`
@@ -58,8 +56,6 @@ const Home: NextPage = () => {
       const dataCurrent: TempCurrent = await response.json();
 
       setCurrent(dataCurrent);
-
-      setCurrentCity(city);
 
       setLoading(false);
     } catch (err: any) {
@@ -116,7 +112,7 @@ const Home: NextPage = () => {
       </div>
       <div className="flex gap-2 text-center flex-wrap justify-center mb-2">
         <Card>
-          <h3 className="text-2xl font-semibold capitalize">{currentCity}</h3>
+          <h3 className="text-2xl font-semibold capitalize">{city}</h3>
           <p>
             {tempConvert(212, temp)}&deg;{temp}
           </p>
