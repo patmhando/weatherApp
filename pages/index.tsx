@@ -7,6 +7,7 @@ import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 // components
 import TempResults from '@/components/TempResults';
 import Card from '@/components/Card';
+import Image from 'next/image';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -104,11 +105,7 @@ const Home: NextPage = () => {
         </button>
       </div>
 
-      <h3 className="text-2xl font-semibold capitalize">
-        {currentCity} current weather
-      </h3>
       <div className="flex gap-1">
-        <p className="text-lg font-semibold">Temeperature in C</p>
         {/* <select name="temp" onChange={handleTemp}>
             <option value="C">C</option>
             <option value="F">F</option>
@@ -116,24 +113,27 @@ const Home: NextPage = () => {
       </div>
       <div className="flex gap-2 text-center flex-wrap justify-center mb-2">
         <Card>
-          <p className="">Temperature</p>
-          <p>{current?.main?.temp}</p>
-        </Card>
-        <Card>
-          <p>Weather Description</p>
-          <p>{current?.weather?.[0]?.description}</p>
-        </Card>
-        <Card>
-          <p>Humidity</p>
-          <p>{current?.main?.humidity}</p>
-        </Card>
-        <Card>
-          <p>Wind Speed</p>
-          <p>{current?.wind?.speed}</p>
-        </Card>
-        <Card>
-          <p>Icon</p>
-          <p>{current?.weather?.[0]?.icon}</p>
+          <h3 className="text-2xl font-semibold capitalize">{currentCity}</h3>
+          <p>{current?.main?.temp}&deg;C</p>
+
+          <p className="capitalize">{current?.weather?.[0]?.description}</p>
+
+          <p>
+            Humidity <span>{current?.main?.humidity}%</span>
+          </p>
+
+          <p>
+            Wind Speed <span>{current?.wind?.speed}</span>
+          </p>
+          {current?.weather && (
+            <Image
+              src={`https://openweathermap.org/img/wn/${current?.weather?.[0]?.icon}@2x.png`}
+              alt="weather"
+              width={64}
+              height={64}
+            />
+          )}
+          <p></p>
         </Card>
       </div>
       <h3 className="text-2xl font-semibold capitalize">Daily Forecast</h3>
