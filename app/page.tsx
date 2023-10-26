@@ -25,6 +25,13 @@ interface TempCurrent {
   };
 }
 
+export interface TempForecast {
+  datetime: string;
+  icon: string;
+  lowTemp: number;
+  highTemp: number;
+}
+
 const dataCurrent: TempCurrent = {
   weather: [{ description: 'Clear Sky', icon: '04d' }],
   main: {
@@ -37,10 +44,43 @@ const dataCurrent: TempCurrent = {
   },
 };
 
+const dataForecast: TempForecast[] = [
+  {
+    datetime: '12/08/2022',
+    icon: '02d',
+    lowTemp: 44,
+    highTemp: 55,
+  },
+  {
+    datetime: '12/09/2022',
+    icon: '02d',
+    lowTemp: 44,
+    highTemp: 55,
+  },
+  {
+    datetime: '19/08/2022',
+    icon: '01d',
+    lowTemp: 14,
+    highTemp: 25,
+  },
+  {
+    datetime: '16/08/2022',
+    icon: '02d',
+    lowTemp: 44,
+    highTemp: 55,
+  },
+  {
+    datetime: '13/08/2022',
+    icon: '05d',
+    lowTemp: 4,
+    highTemp: 35,
+  },
+];
+
 const Home: NextPage = () => {
   const [city, setCity] = useState('');
   const [current, setCurrent] = useState<TempCurrent>(dataCurrent);
-  const [forecast, setForecast] = useState<any>();
+  const [forecast, setForecast] = useState(dataForecast);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState('');
   const [temp, setTemp] = useState('C');
@@ -143,8 +183,8 @@ const Home: NextPage = () => {
             <Image
               src={`https://openweathermap.org/img/wn/${current?.weather?.[0]?.icon}@2x.png`}
               alt="weather"
-              width={64}
-              height={64}
+              width={48}
+              height={48}
             />
           )}
           <p></p>
@@ -162,8 +202,12 @@ const Home: NextPage = () => {
             </tr>
           </thead>
           <tbody>
-            {forecast?.data?.map((weather: any) => (
-              <TempResults key={weather?.datetime} weather={weather} />
+            {forecast?.map((weather) => (
+              <TempResults
+                key={weather?.datetime}
+                weather={weather}
+                temp={temp}
+              />
             ))}
           </tbody>
         </table>

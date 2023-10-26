@@ -5,7 +5,7 @@ import { Montserrat } from 'next/font/google';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Weather App',
+  title: 'Weather Forecast App',
 };
 
 const montserrat = Montserrat({ subsets: ['latin'] });
