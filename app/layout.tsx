@@ -13,11 +13,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body
-        className={`${montserrat.className} bg-whiteColor dark:bg-grayColor text-whiteColor text-lg md:text-xl`}
+        className={`${montserrat.className} bg-whiteColor dark:bg-grayColor px-4 sm:px-[15vw] lg:px-[20vw] pb-8r text-lg md:text-xl`}
       >
-        <main className="bg-primaryColor px-4 sm:px-[15vw] lg:px-[20vw] pb-8">
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   );

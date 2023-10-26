@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { NextPage } from 'next';
-import { Montserrat } from 'next/font/google';
 import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
@@ -12,8 +11,6 @@ import Card from '@/app/components/Card';
 
 // utils
 import { tempConvert } from '@/app/utils';
-
-const montserrat = Montserrat({ subsets: ['latin'] });
 
 interface TempCurrent {
   weather: [{ description: string; icon: string }];
@@ -83,9 +80,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <main
-      className={`${montserrat.className} my-8  flex flex-col justify-center items-center gap-2`}
-    >
+    <main className="my-8  flex flex-col justify-center items-center gap-2">
       <button onClick={handleTheme} className="focus:outline-none">
         {theme === 'dark' ? (
           <SunIcon className="w-6 h-6" aria-hidden="true" />
