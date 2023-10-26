@@ -1,9 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
-import Image from 'next/image';
+import { ThemeProvider } from 'next-themes';
 
 // components
 import TempResults from '@/app/components/TempResults';
@@ -80,7 +81,8 @@ const Home: NextPage = () => {
   };
 
   return (
-    <main className="my-8  flex flex-col justify-center items-center gap-2">
+    // <ThemeProvider attribute="class">
+    <main className="my-8 flex flex-col justify-center items-center gap-2">
       <button onClick={handleTheme} className="focus:outline-none">
         {theme === 'dark' ? (
           <SunIcon className="w-6 h-6" aria-hidden="true" />
@@ -180,6 +182,7 @@ const Home: NextPage = () => {
         </a>
       </p>
     </main>
+    // </ThemeProvider>
   );
 };
 export default Home;
