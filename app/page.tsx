@@ -138,7 +138,7 @@ const Home: NextPage = () => {
         <label htmlFor="city">
           <input
             type="text"
-            placeholder="Enter City"
+            placeholder="Search city weather"
             name="city"
             value={city}
             onChange={handleCity}
@@ -155,8 +155,8 @@ const Home: NextPage = () => {
         </button>
       </div>
 
-      <h3 className="text-lg sm:text-xl font-semibold mt-6 uppercase">
-        <span>{city} </span>
+      <h3 className="text-lg sm:text-xl font-semibold mt-6 uppercase text-center">
+        <span>{city}&nbsp;</span>
         <span>Current temperature in </span>
         <select name="temp" onChange={handleTemp}>
           <option value="C">C</option>
