@@ -155,14 +155,14 @@ const Home: NextPage = () => {
         </button>
       </div>
 
-      <label htmlFor="temp" className="text-xl font-semibold mt-6 uppercase">
+      <h3 className="text-lg sm:text-xl font-semibold mt-6 uppercase">
         <span>{city} </span>
         <span>Current temperature in </span>
         <select name="temp" onChange={handleTemp}>
           <option value="C">C</option>
           <option value="F">F</option>
         </select>
-      </label>
+      </h3>
 
       <div className="flex gap-2 text-center flex-col items-center mb-2">
         {current?.weather && (
@@ -198,7 +198,9 @@ const Home: NextPage = () => {
           </p>
         </div>
       </div>
-      <h3 className="text-xl font-semibold uppercase">Daily Forecast</h3>
+      <h3 className="text-lg sm:text-xl font-semibold uppercase">
+        Daily Forecast
+      </h3>
       {forecast && (
         <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-2 w-full">
           {forecast?.map((weather) => (
