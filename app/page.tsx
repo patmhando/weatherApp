@@ -175,12 +175,12 @@ const Home: NextPage = () => {
         )}
         <div className="flex flex-col gap-2">
           <p>
-            <span>Today's temperature is </span>
+            <span>Today&rsquo;s temperature is&nbsp;</span>
             <span className="text-primaryColor font-bold">
               {tempConvert(212, temp)}&deg;{temp}
             </span>
 
-            <span> with </span>
+            <span>&nbsp;with&nbsp;</span>
             <span className="capitalize">
               {current?.weather?.[0]?.description}
             </span>
