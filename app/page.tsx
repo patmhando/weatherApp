@@ -47,7 +47,7 @@ const dataCurrent: TempCurrent = {
 const dataForecast: TempForecast[] = [
   {
     datetime: '12/08/2022',
-    icon: '02d',
+    icon: '03d',
     lowTemp: 44,
     highTemp: 55,
   },
@@ -71,7 +71,7 @@ const dataForecast: TempForecast[] = [
   },
   {
     datetime: '13/08/2022',
-    icon: '05d',
+    icon: '04d',
     lowTemp: 4,
     highTemp: 35,
   },
@@ -192,25 +192,15 @@ const Home: NextPage = () => {
       </div>
       <h3 className="text-2xl font-semibold capitalize">Daily Forecast</h3>
       {forecast && (
-        <table className="" cellPadding={20}>
-          <thead className="text-sm">
-            <tr className="bg-yellow-900">
-              <th>Date</th>
-              <th>Icon</th>
-              <th>Low Temp</th>
-              <th>High Temp</th>
-            </tr>
-          </thead>
-          <tbody>
-            {forecast?.map((weather) => (
-              <TempResults
-                key={weather?.datetime}
-                weather={weather}
-                temp={temp}
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className="flex gap-2">
+          {forecast?.map((weather) => (
+            <TempResults
+              key={weather?.datetime}
+              weather={weather}
+              temp={temp}
+            />
+          ))}
+        </div>
       )}
 
       {errors && (
