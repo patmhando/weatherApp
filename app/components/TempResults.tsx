@@ -14,7 +14,7 @@ interface IProps {
 
 const TempResults: FC<IProps> = ({ weather, temp }) => {
   return (
-    <div className="text-base bg-grayColor shadow flex flex-col gap-4 items-center px-6 py-3 w-max rounded">
+    <div className="text-base bg-grayColor shadow flex flex-col gap-4 items-center px-6 py-3 rounded">
       <Image
         src={`https://openweathermap.org/img/wn/${weather?.icon}@2x.png`}
         alt="weather"

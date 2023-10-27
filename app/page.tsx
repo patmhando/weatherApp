@@ -123,7 +123,7 @@ const Home: NextPage = () => {
 
   return (
     // <ThemeProvider attribute="class">
-    <main className="my-8 flex flex-col justify-center items-center gap-2">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 flex flex-col justify-center items-center gap-4">
       <button onClick={handleTheme} className="focus:outline-none">
         {theme === 'dark' ? (
           <SunIcon className="w-6 h-6" aria-hidden="true" />
@@ -142,7 +142,7 @@ const Home: NextPage = () => {
             name="city"
             value={city}
             onChange={handleCity}
-            className="py-2 px-6 border rounded-xl"
+            className="py-2 px-6 outline-none rounded-xl"
           />
         </label>
         <button
@@ -156,7 +156,7 @@ const Home: NextPage = () => {
       </div>
 
       <label htmlFor="temp" className="text-xl font-semibold mt-6 uppercase">
-        <span>{city}</span>
+        <span>{city} </span>
         <span>Current temperature in </span>
         <select name="temp" onChange={handleTemp}>
           <option value="C">C</option>
@@ -200,7 +200,7 @@ const Home: NextPage = () => {
       </div>
       <h3 className="text-xl font-semibold uppercase">Daily Forecast</h3>
       {forecast && (
-        <div className="flex gap-2">
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-2 w-full">
           {forecast?.map((weather) => (
             <TempResults
               key={weather?.datetime}

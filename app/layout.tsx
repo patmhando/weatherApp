@@ -13,7 +13,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body
-        className={`${montserrat.className} bg-secondaryColor text-gray-600 px-4 sm:px-[15vw] lg:px-[20vw] pb-8 text-lg md:text-xl`}
+        className={`${montserrat.className} bg-secondaryColor text-gray-600 text-lg md:text-xl`}
       >
         {children}
       </body>
