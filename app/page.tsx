@@ -155,40 +155,48 @@ const Home: NextPage = () => {
       </div>
 
       <div className="flex gap-1">
-        <label htmlFor="temp">
-          <span>Temperature in </span>
+        <label htmlFor="temp" className="text-2xl font-semibold">
+          <span className="capitalize">{city}</span>
+          <span>Current temperature in </span>
           <select name="temp" onChange={handleTemp}>
             <option value="C">C</option>
             <option value="F">F</option>
           </select>
         </label>
       </div>
-      <div className="flex gap-2 text-center flex-wrap justify-center mb-2">
-        <Card>
-          <h3 className="text-2xl font-semibold capitalize">{city}</h3>
+      <div className="flex gap-2 text-center flex-col items-center mb-2">
+        {current?.weather && (
+          <Image
+            src={`https://openweathermap.org/img/wn/${current?.weather?.[0]?.icon}@2x.png`}
+            alt="weather"
+            width={64}
+            height={64}
+          />
+        )}
+        <div className="flex flex-col gap-2">
           <p>
-            {tempConvert(212, temp)}&deg;{temp}
+            <span>Today's temperature is </span>
+            <span className="text-primaryColor font-bold">
+              {tempConvert(212, temp)}&deg;{temp}
+            </span>
+
+            <span> with </span>
+            <span className="capitalize">
+              {current?.weather?.[0]?.description}
+            </span>
           </p>
 
-          <p className="capitalize">{current?.weather?.[0]?.description}</p>
-
           <p>
-            Humidity <span>{current?.main?.humidity}%</span>
+            Humidity level is{' '}
+            <span className="text-primaryColor font-semibold">
+              {current?.main?.humidity}%{' '}
+            </span>
+            and Wind Speed is{' '}
+            <span className="text-primaryColor font-semibold">
+              {current?.wind?.speed}
+            </span>
           </p>
-
-          <p>
-            Wind Speed <span>{current?.wind?.speed}</span>
-          </p>
-          {current?.weather && (
-            <Image
-              src={`https://openweathermap.org/img/wn/${current?.weather?.[0]?.icon}@2x.png`}
-              alt="weather"
-              width={48}
-              height={48}
-            />
-          )}
-          <p></p>
-        </Card>
+        </div>
       </div>
       <h3 className="text-2xl font-semibold capitalize">Daily Forecast</h3>
       {forecast && (
