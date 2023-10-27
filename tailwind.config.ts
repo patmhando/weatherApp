@@ -13,7 +13,7 @@ const config: Config = {
         primaryColor: '#d9480f',
         secondaryColor: '#ffd8a8',
         whiteColor: '#f5f5f5',
-        grayColor: '#9999a0',
+        grayColor: '#c3c3c3',
       },
     },
   },

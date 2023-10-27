@@ -79,7 +79,7 @@ const dataForecast: TempForecast[] = [
 
 const Home: NextPage = () => {
   const [city, setCity] = useState('');
-  const [current, setCurrent] = useState<TempCurrent>(dataCurrent);
+  const [current, setCurrent] = useState(dataCurrent);
   const [forecast, setForecast] = useState(dataForecast);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState('');
@@ -115,6 +115,7 @@ const Home: NextPage = () => {
     //   setErrors(err.message);
     // }
   };
+  // #c3c3c3
 
   const handleTemp = (e: any) => {
     setTemp(e?.target.value);
@@ -130,7 +131,7 @@ const Home: NextPage = () => {
           <MoonIcon className="w-6 h-6" aria-hidden="true" />
         )}
       </button>
-      <h1 className="text-center text-2xl font-bold uppercase">
+      <h1 className="text-center text-4xl font-bold uppercase">
         Weather Forecast App
       </h1>
       <div className="relative">
@@ -154,16 +155,15 @@ const Home: NextPage = () => {
         </button>
       </div>
 
-      <div className="flex gap-1">
-        <label htmlFor="temp" className="text-2xl font-semibold">
-          <span className="capitalize">{city}</span>
-          <span>Current temperature in </span>
-          <select name="temp" onChange={handleTemp}>
-            <option value="C">C</option>
-            <option value="F">F</option>
-          </select>
-        </label>
-      </div>
+      <label htmlFor="temp" className="text-xl font-semibold mt-6 uppercase">
+        <span>{city}</span>
+        <span>Current temperature in </span>
+        <select name="temp" onChange={handleTemp}>
+          <option value="C">C</option>
+          <option value="F">F</option>
+        </select>
+      </label>
+
       <div className="flex gap-2 text-center flex-col items-center mb-2">
         {current?.weather && (
           <Image
@@ -198,7 +198,7 @@ const Home: NextPage = () => {
           </p>
         </div>
       </div>
-      <h3 className="text-2xl font-semibold capitalize">Daily Forecast</h3>
+      <h3 className="text-xl font-semibold uppercase">Daily Forecast</h3>
       {forecast && (
         <div className="flex gap-2">
           {forecast?.map((weather) => (
@@ -214,7 +214,7 @@ const Home: NextPage = () => {
       {errors && (
         <div className="bg-red-700 rounded py-1 px-4 text-white">{errors}</div>
       )}
-      <p>
+      <p className="mt-8">
         Source code are available
         <a
           href="https://github.com/patmhando/weatherApp"

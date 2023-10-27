@@ -14,23 +14,23 @@ interface IProps {
 
 const TempResults: FC<IProps> = ({ weather, temp }) => {
   return (
-    <div className="text-base bg-grayColor flex flex-col gap-4 items-center px-4 py-2 w-max rounded text-whiteColor">
+    <div className="text-base bg-grayColor shadow flex flex-col gap-4 items-center px-6 py-3 w-max rounded">
       <Image
         src={`https://openweathermap.org/img/wn/${weather?.icon}@2x.png`}
         alt="weather"
-        width={32}
-        height={32}
+        width={48}
+        height={48}
       />
 
       <div className="flex gap-4">
         <p className="flex flex-col items-center">
-          <span className="text-lg">
+          <span className="text-lg text-primaryColor">
             {tempConvert(weather?.lowTemp, temp)}&deg;{temp}
           </span>
           <span className="font-medium">Low temp</span>
         </p>
         <p className="flex flex-col items-center">
-          <span className="text-lg">
+          <span className="text-lg text-primaryColor">
             {tempConvert(weather?.highTemp, temp)}&deg;{temp}
           </span>
           <span className="font-medium">High temp</span>
