@@ -131,7 +131,7 @@ const Home: NextPage = () => {
           <MoonIcon className="w-6 h-6" aria-hidden="true" />
         )}
       </button>
-      <h1 className="text-center text-4xl font-bold uppercase">
+      <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold uppercase">
         Weather Forecast App
       </h1>
       <div className="relative">
